@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gateway Control Panel</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;800&display=swap">
+  <style>
+    :root {
+      --color-primary: #A855F7;
+      --color-primary-deep: #7C3AED;
+      --color-accent: #FFD700;
+      --color-bg: #0A0A0A;
+      --color-card: rgba(255, 255, 255, 0.03);
+      --color-card-border: rgba(255, 255, 255, 0.08);
+      --color-text: #FFFFFF;
+      --color-text-muted: #A1A1AA;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        linear-gradient(rgba(168, 85, 247, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--color-accent), #FFFFFF, var(--color-accent));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--color-card);
+      border: 1px solid var(--color-card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--color-card-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-deep));
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .btn-secondary:hover {
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    .btn-danger:hover {
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .domain-list {
+      margin-top: 1.5rem;
+    }
+
+    .domain-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-card-border);
+    }
+
+    .domain-item:last-child {
+      border-bottom: none;
+    }
+
+    .domain-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .domain-url {
+      font-weight: 500;
+      font-family: monospace;
+      font-size: 0.95rem;
+    }
+
+    .domain-meta {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-active {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .status-blocked {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .status-unknown {
+      background: rgba(234, 179, 8, 0.1);
+      color: #eab308;
+      border: 1px solid rgba(234, 179, 8, 0.2);
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .alert-success {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .alert-danger {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .actions-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Gateway Control</h1>
+      <p class="subtitle">Manage the dynamic domain pool and check block status</p>
+    </header>
+
+    <!-- Key Card -->
+    <div class="card">
+      <div class="form-group">
+        <label for="api-key">Admin API Key</label>
+        <input type="password" id="api-key" placeholder="Enter ADMIN_API_KEY to authenticate">
+      </div>
+      <button class="btn" id="save-key-btn">Connect Panel</button>
+    </div>
+
+    <!-- Alert Message -->
+    <div id="alert-msg" class="alert"></div>
+
+    <!-- Panel Card -->
+    <div class="card" id="panel-card" style="display: none;">
+      <h2>Add Domain</h2>
+      <div style="margin-top: 1rem;" class="form-group flex-row">
+        <input type="text" id="new-domain" placeholder="example.xyz">
+        <button class="btn" id="add-btn">Add</button>
+      </div>
+
+      <div class="actions-panel">
+        <h2>Domain Pool</h2>
+        <button class="btn btn-secondary" id="check-btn">Check Now</button>
+      </div>
+      <div id="loading" style="display: none; text-align: center; margin: 1rem 0; color: var(--color-text-muted);">
+        Checking domains... please wait.
+      </div>
+      <div class="domain-list" id="domain-list">
+        <!-- Domains will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const apiKeyInput = document.getElementById('api-key');
+    const saveKeyBtn = document.getElementById('save-key-btn');
+    const panelCard = document.getElementById('panel-card');
+    const newDomainInput = document.getElementById('new-domain');
+    const addBtn = document.getElementById('add-btn');
+    const checkBtn = document.getElementById('check-btn');
+    const domainList = document.getElementById('domain-list');
+    const alertMsg = document.getElementById('alert-msg');
+    const loading = document.getElementById('loading');
+
+    // Load saved API key
+    const savedKey = localStorage.getItem('gw_admin_key');
+    if (savedKey) {
+      apiKeyInput.value = savedKey;
+      testAndLoad();
+    }
+
+    saveKeyBtn.addEventListener('click', () => {
+      localStorage.setItem('gw_admin_key', apiKeyInput.value);
+      testAndLoad();
+    });
+
+    async function testAndLoad() {
+      const key = apiKeyInput.value;
+      if (!key) return;
+
+      showAlert('Authenticating...', 'success');
+      const data = await sendRequest({ action: 'list' });
+      if (data && data.success) {
+        showAlert('Successfully connected!', 'success');
+        panelCard.style.display = 'block';
+        renderDomains(data.data.domains);
+      } else {
+        showAlert(data ? data.error : 'Connection failed. Verify API Key and backend.', 'danger');
+        panelCard.style.display = 'none';
+      }
+    }
+
+    async function sendRequest(payload) {
+      const key = apiKeyInput.value;
+      try {
+        const res = await fetch('/.netlify/functions/manage', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': key
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        return data;
+      } catch (err) {
+        console.error(err);
+        return null;
+      }
+    }
+
+    function renderDomains(domains) {
+      domainList.innerHTML = '';
+      if (!domains || domains.length === 0) {
+        domainList.innerHTML = '<div style="text-align: center; color: var(--color-text-muted); padding: 2rem;">No domains in the rotation pool yet.</div>';
+        return;
+      }
+
+      // Sort: active first, then unknown, then blocked
+      const sorted = [...domains].sort((a, b) => {
+        const order = { 'active': 1, 'unknown': 2, 'blocked': 3 };
+        return (order[a.status] || 9) - (order[b.status] || 9);
+      });
+
+      sorted.forEach(domain => {
+        const div = document.createElement('div');
+        div.className = 'domain-item';
+        
+        const lastCheckedStr = domain.lastChecked 
+          ? new Date(domain.lastChecked).toLocaleString() 
+          : 'Never';
+
+        const blockedMeta = domain.blockedSince 
+          ? `<br><span style="color:#ef4444">Blocked since: ${new Date(domain.blockedSince).toLocaleString()}</span>` 
+          : '';
+
+        div.innerHTML = `
+          <div class="domain-info">
+            <div class="domain-url">${domain.url}</div>
+            <div class="domain-meta">
+              Last checked: ${lastCheckedStr}
+              ${blockedMeta}
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <span class="status-badge status-${domain.status || 'unknown'}">${domain.status || 'unknown'}</span>
+            <button class="btn btn-danger" onclick="removeDomain('${domain.url}')">Remove</button>
+          </div>
+        `;
+        domainList.appendChild(div);
+      });
+    }
+
+    async function removeDomain(url) {
+      if (!confirm(`Are you sure you want to remove ${url} from rotation?`)) return;
+      
+      const data = await sendRequest({ action: 'remove', domain: url });
+      if (data && data.success) {
+        showAlert(`Successfully removed ${url}`, 'success');
+        renderDomains(data.data.domains);
+      } else {
+        showAlert(data ? data.error : 'Failed to remove domain', 'danger');
+      }
+    }
+
+    addBtn.addEventListener('click', async () => {
+      const val = newDomainInput.value.trim();
+      if (!val) return;
+      
+      addBtn.disabled = true;
+      const data = await sendRequest({ action: 'add', domain: val });
+      addBtn.disabled = false;
+      
+      if (data && data.success) {
+        showAlert(`Successfully added and checked ${val}`, 'success');
+        newDomainInput.value = '';
+        renderDomains(data.data.domains);
+      } else {
+        showAlert(data ? data.error : 'Failed to add domain', 'danger');
+      }
+    });
+
+    checkBtn.addEventListener('click', async () => {
+      checkBtn.disabled = true;
+      loading.style.display = 'block';
+      const data = await sendRequest({ action: 'check-now' });
+      checkBtn.disabled = false;
+      loading.style.display = 'none';
+
+      if (data && data.success) {
+        showAlert('Domain health check execution complete.', 'success');
+        renderDomains(data.data.domains);
+      } else {
+        showAlert(data ? data.error : 'Check failed', 'danger');
+      }
+    });
+
+    function showAlert(text, type) {
+      alertMsg.textContent = text;
+      alertMsg.style.display = 'block';
+      alertMsg.className = `alert alert-${type}`;
+      setTimeout(() => {
+        alertMsg.style.display = 'none';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

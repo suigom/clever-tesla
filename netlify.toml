@@ -1,0 +1,47 @@
+# Netlify Configuration
+# Deploys from root directory with security headers
+
+[build]
+  publish = "."
+
+# ── Security Headers ──────────────────────────────────────────────
+# These headers are critical for the anti-block strategy.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # CRITICAL: Don't leak this landing page URL to the target server.
+    # Without this, target server logs would show this page as referrer,
+    # potentially linking the two and getting the landing page blocked.
+    Referrer-Policy = "no-referrer"
+
+    # Prevent clickjacking
+    X-Frame-Options = "DENY"
+
+    # Prevent MIME type sniffing
+    X-Content-Type-Options = "nosniff"
+
+    # Opt out of Google FLoC / Topics tracking
+    Permissions-Policy = "interest-cohort=()"
+
+    # Basic CSP — adjust if you add external resources
+    Content-Security-Policy = "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; script-src 'self'"
+
+# ── Cache Control ─────────────────────────────────────────────────
+# Short cache for HTML/JS so config changes deploy fast
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+
+# Longer cache for images
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

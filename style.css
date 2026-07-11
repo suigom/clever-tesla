@@ -1,0 +1,454 @@
+/* ============================================================
+   CYBERPUNK / GAMING DESIGN SYSTEM
+   Single-page landing page stylesheet
+   ============================================================ */
+
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+/* --- @property registration for animatable custom properties --- */
+@property --led-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ============================================================
+   1. CSS Custom Properties (Design Tokens)
+   ============================================================ */
+:root {
+  --color-primary: #A855F7;
+  --color-primary-deep: #7C3AED;
+  --color-accent: #FFD700;
+  --color-accent-warm: #F59E0B;
+  --color-bg: #0A0A0A;
+  --color-bg-alt: #111111;
+  --color-text: #FFFFFF;
+  --color-text-muted: #A1A1AA;
+  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================================
+   2. Reset & Base
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================================
+   3. Background Effects
+   ============================================================ */
+
+/* --- Grid overlay --- */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 59px,
+      rgba(168, 85, 247, 0.04) 59px,
+      rgba(168, 85, 247, 0.04) 60px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(168, 85, 247, 0.04) 59px,
+      rgba(168, 85, 247, 0.04) 60px
+    );
+}
+
+/* --- Scanlines overlay --- */
+.bg-scanlines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+}
+
+/* ============================================================
+   Layout Container
+   ============================================================ */
+.container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 540px;
+  padding: 1rem;
+}
+
+/* ============================================================
+   4. LED RGB Border Wrapper
+   ============================================================ */
+.led-border {
+  position: relative;
+  padding: 3px;
+  border-radius: 23px; /* card radius + border width */
+  z-index: 1;
+}
+
+.led-border::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  background: conic-gradient(
+    from var(--led-angle),
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-text),
+    var(--color-primary)
+  );
+  border-radius: inherit;
+  z-index: -1;
+  animation: led-rgb 4s linear infinite;
+}
+
+/* Smooth the edges of the conic gradient with a slight blur */
+.led-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+/* ============================================================
+   5. Main Card (Glassmorphism)
+   ============================================================ */
+.card {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  padding: 2.5rem;
+  background: var(--color-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 20px;
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* ============================================================
+   6. Brand Name
+   ============================================================ */
+.brand-name {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+
+  /* Gold shimmer */
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-text) 50%,
+    var(--color-accent) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   7. Hero Image
+   ============================================================ */
+.hero-image {
+  overflow: hidden;
+  border-radius: 12px;
+  max-height: 220px;
+  width: 100%;
+  margin: 1.5rem 0;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+   8. Tagline
+   ============================================================ */
+.tagline {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   9. CTA Button
+   ============================================================ */
+.cta-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-deep));
+  border: 1px solid var(--color-accent);
+  padding: 14px 48px;
+  border-radius: 50px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-text);
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow:
+    0 0 20px rgba(168, 85, 247, 0.4),
+    0 0 40px rgba(168, 85, 247, 0.1);
+  transition: all 0.3s ease;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 25px rgba(255, 215, 0, 0.5),
+    0 0 50px rgba(255, 215, 0, 0.2),
+    0 0 80px rgba(168, 85, 247, 0.15);
+}
+
+.cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   10. Countdown
+   ============================================================ */
+.countdown {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 1rem;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.countdown .countdown-number {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* ============================================================
+   11. Status Footer
+   ============================================================ */
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-family: 'Inter', sans-serif;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   12. Keyframe Animations
+   ============================================================ */
+
+/* LED border rotation */
+@keyframes led-rgb {
+  from {
+    --led-angle: 0deg;
+  }
+  to {
+    --led-angle: 360deg;
+  }
+}
+
+/* Gold shimmer text */
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+/* CTA button pulsing glow */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(168, 85, 247, 0.4),
+      0 0 40px rgba(168, 85, 247, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(168, 85, 247, 0.6),
+      0 0 60px rgba(168, 85, 247, 0.2),
+      0 0 80px rgba(168, 85, 247, 0.1);
+  }
+}
+
+/* Status dot pulse */
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.5);
+  }
+}
+
+/* ============================================================
+   13. Accessibility – Reduced Motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   14. Responsive Breakpoints
+   ============================================================ */
+@media (max-width: 540px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .brand-name {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+  }
+
+  .cta-btn {
+    padding: 12px 36px;
+    font-size: 0.8rem;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+  }
+
+  .hero-image {
+    max-height: 180px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .brand-name {
+    font-size: clamp(1.25rem, 5vw, 2rem);
+    letter-spacing: 0.05em;
+  }
+
+  .cta-btn {
+    padding: 10px 28px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-image {
+    max-height: 150px;
+    margin: 1rem 0;
+  }
+}

@@ -1,0 +1,18 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Scheduled function config
+[functions."check-domains"]
+  schedule = "0 * * * *" # Every hour (suitable for TrustPositif API rate limits)
+
+[[headers]]
+  for = "/.netlify/functions/status"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"
+    Cache-Control = "public, max-age=60"

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Brand-Safe SEO: title and meta are populated by config.js -->
+  <title>Gateway</title>
+  <meta name="description" content="">
+  <link rel="canonical" href="">
+
+  <!-- Open Graph (brand-only) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:url" content="">
+
+  <!-- No industry keywords anywhere in this file -->
+
+  <link rel="stylesheet" href="style.css">
+  <script src="config.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Background effects (CSS-only, no images) -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-scanlines" aria-hidden="true"></div>
+
+  <!-- Main content -->
+  <main class="container">
+    <div class="led-border">
+      <div class="card">
+
+        <!-- Brand name (gold shimmer) -->
+        <h1 class="brand-name" id="brand-name">GATEWAY</h1>
+
+        <!-- Hero image (easily swappable via config.js) -->
+        <div class="hero-image">
+          <img
+            id="hero-img"
+            src="./assets/hero.jpg"
+            alt="Banner"
+            width="800"
+            height="450"
+            loading="eager"
+          >
+        </div>
+
+        <!-- Tagline -->
+        <p class="tagline" id="tagline">Welcome</p>
+
+        <!-- CTA Button -->
+        <button class="cta-btn" id="cta-btn" type="button">
+          ENTER
+        </button>
+
+        <!-- Countdown -->
+        <p class="countdown" id="countdown" aria-live="polite">
+          Redirecting in <span class="countdown-number" id="countdown-number">5</span>s
+        </p>
+
+        <!-- Status indicator -->
+        <div class="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="status-text">System Online</span>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
