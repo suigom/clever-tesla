@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  gateway-control:
+    build: .
+    container_name: gateway-control
+    restart: unless-stopped
+    ports:
+      # Access via: http://YOUR-SERVER-IP:34567
+      - "34567:34567"
+    environment:
+      - PORT=34567
+      - ADMIN_API_KEY=${ADMIN_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - TP_API_KEY=${TP_API_KEY}
+      - DB_PATH=/app/data/domains.db
+      - NODE_ENV=production
+    volumes:
+      # Persist SQLite database - survives container restarts
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('node-fetch').default('http://localhost:34567/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# No networks section needed - uses default bridge
