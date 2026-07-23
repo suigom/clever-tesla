@@ -36,7 +36,7 @@ const CONFIG = {
 
   // Fallback domain pool — used if centralApiUrl is empty or unreachable.
   domains: [
-    "https://gudangspin.click",
+    "https://hm.tambangemas.org",
   ],
 
   // "random" = pick a random domain each visit
