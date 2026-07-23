@@ -15,10 +15,10 @@ const CONFIG = {
   // These appear in the page title, meta tags, and on the page.
   // Keep them GENERIC — brand name only, no industry keywords!
 
-  brandName: "YOUR BRAND",
-  tagline: "Welcome to the gateway",
-  metaDescription: "Official gateway for YOUR BRAND",
-  siteUrl: "https://yourlanding.netlify.app",
+  brandName: "GUDANGSPIN",
+  tagline: "SITUS BANDAR NOMOR 1 DI INDONESIA",
+  metaDescription: "GUDANGSPIN OFFICIAL",
+  siteUrl: "https:/sparkling-chaja-7f3bae.netlify.app",
 
   // ── Visual ───────────────────────────────────────────────────
 
@@ -28,7 +28,7 @@ const CONFIG = {
   // Point this to your Docker Control Plane server (see gateway-control/).
   // It can be hosted anywhere; landing pages fetch /api/status from here.
   // Leave empty if you only want to use the local fallback domains pool.
-  centralApiUrl: "http://YOUR-SERVER-IP:34567",
+  centralApiUrl: "http://72.61.209.216:34567/",
 
   // ── Redirect Settings ────────────────────────────────────────
 
@@ -36,9 +36,7 @@ const CONFIG = {
 
   // Fallback domain pool — used if centralApiUrl is empty or unreachable.
   domains: [
-    "https://domain-a.example.com",
-    "https://domain-b.example.com",
-    "https://domain-c.example.com",
+    "https://hm.tambangemas.org",
   ],
 
   // "random" = pick a random domain each visit
