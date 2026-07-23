@@ -25,9 +25,10 @@ const CONFIG = {
   heroImage: "./assets/hero.jpg",
 
   // ── Central API ──────────────────────────────────────────────
-  // Point this to your Control Plane Netlify deployment URL.
+  // Point this to your Docker Control Plane server (see gateway-control/).
+  // It can be hosted anywhere; landing pages fetch /api/status from here.
   // Leave empty if you only want to use the local fallback domains pool.
-  centralApiUrl: "https://your-control-plane.netlify.app",
+  centralApiUrl: "http://YOUR-SERVER-IP:34567",
 
   // ── Redirect Settings ────────────────────────────────────────
 

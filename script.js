@@ -86,7 +86,7 @@
 
     try {
       console.log("[Gateway] Fetching domain list from control plane...");
-      const res = await fetch(`${centralApiUrl}/.netlify/functions/status`);
+      const res = await fetch(`${centralApiUrl}/api/status`);
       if (res.ok) {
         const data = await res.json();
         if (data.success && Array.isArray(data.active) && data.active.length > 0) {

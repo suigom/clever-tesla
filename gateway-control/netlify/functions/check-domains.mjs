@@ -28,6 +28,7 @@ async function notifyTelegram(message) {
 export default async (req, context) => {
   console.log("Starting scheduled domain health check...");
   
+  try {
   const store = getStore("domains-store");
   let data = await store.get("domain-list", { type: "json" });
   
